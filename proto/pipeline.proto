@@ -1,0 +1,4 @@
+syntax = "proto3";
+package protogen;
+
+service PipelineService {}
