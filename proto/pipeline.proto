@@ -1,4 +1,17 @@
 syntax = "proto3";
 package protogen;
 
-service PipelineService {}
+service PipelineService {
+    rpc Ingest(stream IngestRequest) returns (stream IngestResponse);
+}
+
+message IngestRequest {
+    string id = 1;
+    string comment = 2;
+    string source = 3;
+}
+
+message IngestResponse {
+    string id = 1;
+    string message = 2;
+}
