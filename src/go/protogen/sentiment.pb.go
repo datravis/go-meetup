@@ -17,42 +17,14 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
 type SentimentRequest struct {
-	Input                string   `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Input string `protobuf:"bytes,1,opt,name=input" json:"input,omitempty"`
 }
 
-func (m *SentimentRequest) Reset()         { *m = SentimentRequest{} }
-func (m *SentimentRequest) String() string { return proto.CompactTextString(m) }
-func (*SentimentRequest) ProtoMessage()    {}
-func (*SentimentRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sentiment_c2327b0071a29eb5, []int{0}
-}
-func (m *SentimentRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SentimentRequest.Unmarshal(m, b)
-}
-func (m *SentimentRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SentimentRequest.Marshal(b, m, deterministic)
-}
-func (dst *SentimentRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SentimentRequest.Merge(dst, src)
-}
-func (m *SentimentRequest) XXX_Size() int {
-	return xxx_messageInfo_SentimentRequest.Size(m)
-}
-func (m *SentimentRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_SentimentRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SentimentRequest proto.InternalMessageInfo
+func (m *SentimentRequest) Reset()                    { *m = SentimentRequest{} }
+func (m *SentimentRequest) String() string            { return proto.CompactTextString(m) }
+func (*SentimentRequest) ProtoMessage()               {}
+func (*SentimentRequest) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{0} }
 
 func (m *SentimentRequest) GetInput() string {
 	if m != nil {
@@ -62,35 +34,13 @@ func (m *SentimentRequest) GetInput() string {
 }
 
 type SentimentResponse struct {
-	Sentiment            float32  `protobuf:"fixed32,1,opt,name=sentiment,proto3" json:"sentiment,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Sentiment float32 `protobuf:"fixed32,1,opt,name=sentiment" json:"sentiment,omitempty"`
 }
 
-func (m *SentimentResponse) Reset()         { *m = SentimentResponse{} }
-func (m *SentimentResponse) String() string { return proto.CompactTextString(m) }
-func (*SentimentResponse) ProtoMessage()    {}
-func (*SentimentResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_sentiment_c2327b0071a29eb5, []int{1}
-}
-func (m *SentimentResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_SentimentResponse.Unmarshal(m, b)
-}
-func (m *SentimentResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_SentimentResponse.Marshal(b, m, deterministic)
-}
-func (dst *SentimentResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SentimentResponse.Merge(dst, src)
-}
-func (m *SentimentResponse) XXX_Size() int {
-	return xxx_messageInfo_SentimentResponse.Size(m)
-}
-func (m *SentimentResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_SentimentResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SentimentResponse proto.InternalMessageInfo
+func (m *SentimentResponse) Reset()                    { *m = SentimentResponse{} }
+func (m *SentimentResponse) String() string            { return proto.CompactTextString(m) }
+func (*SentimentResponse) ProtoMessage()               {}
+func (*SentimentResponse) Descriptor() ([]byte, []int) { return fileDescriptor3, []int{1} }
 
 func (m *SentimentResponse) GetSentiment() float32 {
 	if m != nil {
@@ -112,9 +62,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// SentimentServiceClient is the client API for SentimentService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for SentimentService service
+
 type SentimentServiceClient interface {
 	Analyze(ctx context.Context, in *SentimentRequest, opts ...grpc.CallOption) (*SentimentResponse, error)
 }
@@ -129,14 +78,15 @@ func NewSentimentServiceClient(cc *grpc.ClientConn) SentimentServiceClient {
 
 func (c *sentimentServiceClient) Analyze(ctx context.Context, in *SentimentRequest, opts ...grpc.CallOption) (*SentimentResponse, error) {
 	out := new(SentimentResponse)
-	err := c.cc.Invoke(ctx, "/protogen.SentimentService/Analyze", in, out, opts...)
+	err := grpc.Invoke(ctx, "/protogen.SentimentService/Analyze", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// SentimentServiceServer is the server API for SentimentService service.
+// Server API for SentimentService service
+
 type SentimentServiceServer interface {
 	Analyze(context.Context, *SentimentRequest) (*SentimentResponse, error)
 }
@@ -176,9 +126,9 @@ var _SentimentService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "sentiment.proto",
 }
 
-func init() { proto.RegisterFile("sentiment.proto", fileDescriptor_sentiment_c2327b0071a29eb5) }
+func init() { proto.RegisterFile("sentiment.proto", fileDescriptor3) }
 
-var fileDescriptor_sentiment_c2327b0071a29eb5 = []byte{
+var fileDescriptor3 = []byte{
 	// 145 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2f, 0x4e, 0xcd, 0x2b,
 	0xc9, 0xcc, 0x4d, 0xcd, 0x2b, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x00, 0x53, 0xe9,

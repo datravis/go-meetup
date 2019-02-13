@@ -17,42 +17,14 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
 type NerRequest struct {
-	Input                string   `protobuf:"bytes,1,opt,name=input,proto3" json:"input,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Input string `protobuf:"bytes,1,opt,name=input" json:"input,omitempty"`
 }
 
-func (m *NerRequest) Reset()         { *m = NerRequest{} }
-func (m *NerRequest) String() string { return proto.CompactTextString(m) }
-func (*NerRequest) ProtoMessage()    {}
-func (*NerRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ner_a15c2992151d7e6b, []int{0}
-}
-func (m *NerRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_NerRequest.Unmarshal(m, b)
-}
-func (m *NerRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_NerRequest.Marshal(b, m, deterministic)
-}
-func (dst *NerRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NerRequest.Merge(dst, src)
-}
-func (m *NerRequest) XXX_Size() int {
-	return xxx_messageInfo_NerRequest.Size(m)
-}
-func (m *NerRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_NerRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_NerRequest proto.InternalMessageInfo
+func (m *NerRequest) Reset()                    { *m = NerRequest{} }
+func (m *NerRequest) String() string            { return proto.CompactTextString(m) }
+func (*NerRequest) ProtoMessage()               {}
+func (*NerRequest) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
 
 func (m *NerRequest) GetInput() string {
 	if m != nil {
@@ -62,35 +34,13 @@ func (m *NerRequest) GetInput() string {
 }
 
 type NerResponse struct {
-	Entities             []string `protobuf:"bytes,1,rep,name=entities,proto3" json:"entities,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Entities []string `protobuf:"bytes,1,rep,name=entities" json:"entities,omitempty"`
 }
 
-func (m *NerResponse) Reset()         { *m = NerResponse{} }
-func (m *NerResponse) String() string { return proto.CompactTextString(m) }
-func (*NerResponse) ProtoMessage()    {}
-func (*NerResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ner_a15c2992151d7e6b, []int{1}
-}
-func (m *NerResponse) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_NerResponse.Unmarshal(m, b)
-}
-func (m *NerResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_NerResponse.Marshal(b, m, deterministic)
-}
-func (dst *NerResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NerResponse.Merge(dst, src)
-}
-func (m *NerResponse) XXX_Size() int {
-	return xxx_messageInfo_NerResponse.Size(m)
-}
-func (m *NerResponse) XXX_DiscardUnknown() {
-	xxx_messageInfo_NerResponse.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_NerResponse proto.InternalMessageInfo
+func (m *NerResponse) Reset()                    { *m = NerResponse{} }
+func (m *NerResponse) String() string            { return proto.CompactTextString(m) }
+func (*NerResponse) ProtoMessage()               {}
+func (*NerResponse) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{1} }
 
 func (m *NerResponse) GetEntities() []string {
 	if m != nil {
@@ -112,9 +62,8 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// NerServiceClient is the client API for NerService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for NerService service
+
 type NerServiceClient interface {
 	ExtractSubjectOrgs(ctx context.Context, in *NerRequest, opts ...grpc.CallOption) (*NerResponse, error)
 }
@@ -129,14 +78,15 @@ func NewNerServiceClient(cc *grpc.ClientConn) NerServiceClient {
 
 func (c *nerServiceClient) ExtractSubjectOrgs(ctx context.Context, in *NerRequest, opts ...grpc.CallOption) (*NerResponse, error) {
 	out := new(NerResponse)
-	err := c.cc.Invoke(ctx, "/protogen.NerService/ExtractSubjectOrgs", in, out, opts...)
+	err := grpc.Invoke(ctx, "/protogen.NerService/ExtractSubjectOrgs", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// NerServiceServer is the server API for NerService service.
+// Server API for NerService service
+
 type NerServiceServer interface {
 	ExtractSubjectOrgs(context.Context, *NerRequest) (*NerResponse, error)
 }
@@ -176,9 +126,9 @@ var _NerService_serviceDesc = grpc.ServiceDesc{
 	Metadata: "ner.proto",
 }
 
-func init() { proto.RegisterFile("ner.proto", fileDescriptor_ner_a15c2992151d7e6b) }
+func init() { proto.RegisterFile("ner.proto", fileDescriptor1) }
 
-var fileDescriptor_ner_a15c2992151d7e6b = []byte{
+var fileDescriptor1 = []byte{
 	// 159 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcc, 0x4b, 0x2d, 0xd2,
 	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x00, 0x53, 0xe9, 0xa9, 0x79, 0x4a, 0x4a, 0x5c, 0x5c,

@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"flag"
+	"fmt"
 	"log"
 	"net"
 
@@ -11,6 +13,13 @@ import (
 )
 
 type HelloService struct{}
+
+func (h *HelloService) Hello(ctx context.Context, in *protogen.HelloRequest) (*protogen.HelloResponse, error) {
+	fmt.Println(in.Message)
+	return &protogen.HelloResponse{
+		Message: "What's up",
+	}, nil
+}
 
 func main() {
 	flag.Parse()
@@ -22,6 +31,6 @@ func main() {
 
 	log.Println("Starting Hello server")
 	grpcServer := grpc.NewServer(opts...)
-	protogen.RegisterHelloServiceServer(grpcServer, HelloService{})
+	protogen.RegisterHelloServiceServer(grpcServer, &HelloService{})
 	grpcServer.Serve(lis)
 }

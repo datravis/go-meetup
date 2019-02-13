@@ -19,12 +19,111 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='protogen',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0epipeline.proto\x12\x08protogen2\x11\n\x0fPipelineServiceb\x06proto3')
+  serialized_pb=_b('\n\x0epipeline.proto\x12\x08protogen\"<\n\rIngestRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07\x63omment\x18\x02 \x01(\t\x12\x0e\n\x06source\x18\x03 \x01(\t\"-\n\x0eIngestResponse\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t2R\n\x0fPipelineService\x12?\n\x06Ingest\x12\x17.protogen.IngestRequest\x1a\x18.protogen.IngestResponse(\x01\x30\x01\x62\x06proto3')
 )
 
 
 
+
+_INGESTREQUEST = _descriptor.Descriptor(
+  name='IngestRequest',
+  full_name='protogen.IngestRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='protogen.IngestRequest.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='comment', full_name='protogen.IngestRequest.comment', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='source', full_name='protogen.IngestRequest.source', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=28,
+  serialized_end=88,
+)
+
+
+_INGESTRESPONSE = _descriptor.Descriptor(
+  name='IngestResponse',
+  full_name='protogen.IngestResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='protogen.IngestResponse.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='protogen.IngestResponse.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=90,
+  serialized_end=135,
+)
+
+DESCRIPTOR.message_types_by_name['IngestRequest'] = _INGESTREQUEST
+DESCRIPTOR.message_types_by_name['IngestResponse'] = _INGESTRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+IngestRequest = _reflection.GeneratedProtocolMessageType('IngestRequest', (_message.Message,), dict(
+  DESCRIPTOR = _INGESTREQUEST,
+  __module__ = 'pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:protogen.IngestRequest)
+  ))
+_sym_db.RegisterMessage(IngestRequest)
+
+IngestResponse = _reflection.GeneratedProtocolMessageType('IngestResponse', (_message.Message,), dict(
+  DESCRIPTOR = _INGESTRESPONSE,
+  __module__ = 'pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:protogen.IngestResponse)
+  ))
+_sym_db.RegisterMessage(IngestResponse)
 
 
 
@@ -34,9 +133,18 @@ _PIPELINESERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=28,
-  serialized_end=45,
+  serialized_start=137,
+  serialized_end=219,
   methods=[
+  _descriptor.MethodDescriptor(
+    name='Ingest',
+    full_name='protogen.PipelineService.Ingest',
+    index=0,
+    containing_service=None,
+    input_type=_INGESTREQUEST,
+    output_type=_INGESTRESPONSE,
+    serialized_options=None,
+  ),
 ])
 _sym_db.RegisterServiceDescriptor(_PIPELINESERVICE)
 

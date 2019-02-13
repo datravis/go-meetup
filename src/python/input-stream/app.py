@@ -1,11 +1,11 @@
 import concurrent.futures
-#import grpc
+import grpc
 import os
 import praw
 import sys
 
-#import pipeline_pb2
-#import pipeline_pb2_grpc
+import pipeline_pb2
+import pipeline_pb2_grpc
 
 client_id = os.environ['CLIENT_ID']
 client_secret = os.environ['CLIENT_SECRET']
@@ -21,26 +21,27 @@ reddit = praw.Reddit(client_id=client_id,
                      user_agent=user_agent, username=username)
 
 
-#channel = grpc.insecure_channel('pipeline:9000')
-#stub = pipeline_pb2_grpc.PipelineServiceStub(channel)
+channel = grpc.insecure_channel('pipeline:9000')
+stub = pipeline_pb2_grpc.PipelineServiceStub(channel)
 
 def yield_comments(subreddit):
+    count = 0
     for comment in reddit.subreddit(subreddit).stream.comments():
-        yield comment.body
-        #yield pipeline_pb2.IngestRequest(
-        #    source=subreddit,
-        #    input=comment.body
-        #)
+        count = count + 1
+        yield pipeline_pb2.IngestRequest(
+            id=str(count),
+            source=subreddit,
+            comment=comment.body
+        )
 
 def write_comments(subreddit):
     for comment in yield_comments(subreddit):
-        print("Received Comment from %s" % subreddit)
-    # while True:
-    #     try:
-    #         resp = stub.Ingest(yield_comments(subreddit))
-    #         print(resp)
-    #     except Exception as e:
-    #         print(e)
+        while True:
+            try:
+                for resp in stub.Ingest(yield_comments(subreddit)):
+                	print(resp)
+            except Exception as e:
+                print(e)
 
 executor = concurrent.futures.ThreadPoolExecutor(max_workers=10)
 for subreddit in subreddits:

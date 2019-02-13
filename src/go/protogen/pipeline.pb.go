@@ -17,11 +17,66 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-// This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package it is being compiled against.
-// A compilation error at this line likely means your copy of the
-// proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+type IngestRequest struct {
+	Id      string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	Comment string `protobuf:"bytes,2,opt,name=comment" json:"comment,omitempty"`
+	Source  string `protobuf:"bytes,3,opt,name=source" json:"source,omitempty"`
+}
+
+func (m *IngestRequest) Reset()                    { *m = IngestRequest{} }
+func (m *IngestRequest) String() string            { return proto.CompactTextString(m) }
+func (*IngestRequest) ProtoMessage()               {}
+func (*IngestRequest) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{0} }
+
+func (m *IngestRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *IngestRequest) GetComment() string {
+	if m != nil {
+		return m.Comment
+	}
+	return ""
+}
+
+func (m *IngestRequest) GetSource() string {
+	if m != nil {
+		return m.Source
+	}
+	return ""
+}
+
+type IngestResponse struct {
+	Id      string `protobuf:"bytes,1,opt,name=id" json:"id,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message" json:"message,omitempty"`
+}
+
+func (m *IngestResponse) Reset()                    { *m = IngestResponse{} }
+func (m *IngestResponse) String() string            { return proto.CompactTextString(m) }
+func (*IngestResponse) ProtoMessage()               {}
+func (*IngestResponse) Descriptor() ([]byte, []int) { return fileDescriptor2, []int{1} }
+
+func (m *IngestResponse) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+func (m *IngestResponse) GetMessage() string {
+	if m != nil {
+		return m.Message
+	}
+	return ""
+}
+
+func init() {
+	proto.RegisterType((*IngestRequest)(nil), "protogen.IngestRequest")
+	proto.RegisterType((*IngestResponse)(nil), "protogen.IngestResponse")
+}
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
@@ -31,10 +86,10 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// PipelineServiceClient is the client API for PipelineService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+// Client API for PipelineService service
+
 type PipelineServiceClient interface {
+	Ingest(ctx context.Context, opts ...grpc.CallOption) (PipelineService_IngestClient, error)
 }
 
 type pipelineServiceClient struct {
@@ -45,29 +100,102 @@ func NewPipelineServiceClient(cc *grpc.ClientConn) PipelineServiceClient {
 	return &pipelineServiceClient{cc}
 }
 
-// PipelineServiceServer is the server API for PipelineService service.
+func (c *pipelineServiceClient) Ingest(ctx context.Context, opts ...grpc.CallOption) (PipelineService_IngestClient, error) {
+	stream, err := grpc.NewClientStream(ctx, &_PipelineService_serviceDesc.Streams[0], c.cc, "/protogen.PipelineService/Ingest", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &pipelineServiceIngestClient{stream}
+	return x, nil
+}
+
+type PipelineService_IngestClient interface {
+	Send(*IngestRequest) error
+	Recv() (*IngestResponse, error)
+	grpc.ClientStream
+}
+
+type pipelineServiceIngestClient struct {
+	grpc.ClientStream
+}
+
+func (x *pipelineServiceIngestClient) Send(m *IngestRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *pipelineServiceIngestClient) Recv() (*IngestResponse, error) {
+	m := new(IngestResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// Server API for PipelineService service
+
 type PipelineServiceServer interface {
+	Ingest(PipelineService_IngestServer) error
 }
 
 func RegisterPipelineServiceServer(s *grpc.Server, srv PipelineServiceServer) {
 	s.RegisterService(&_PipelineService_serviceDesc, srv)
 }
 
+func _PipelineService_Ingest_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PipelineServiceServer).Ingest(&pipelineServiceIngestServer{stream})
+}
+
+type PipelineService_IngestServer interface {
+	Send(*IngestResponse) error
+	Recv() (*IngestRequest, error)
+	grpc.ServerStream
+}
+
+type pipelineServiceIngestServer struct {
+	grpc.ServerStream
+}
+
+func (x *pipelineServiceIngestServer) Send(m *IngestResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *pipelineServiceIngestServer) Recv() (*IngestRequest, error) {
+	m := new(IngestRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _PipelineService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "protogen.PipelineService",
 	HandlerType: (*PipelineServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "pipeline.proto",
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Ingest",
+			Handler:       _PipelineService_Ingest_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
+	Metadata: "pipeline.proto",
 }
 
-func init() { proto.RegisterFile("pipeline.proto", fileDescriptor_pipeline_1f7726af2adbed75) }
+func init() { proto.RegisterFile("pipeline.proto", fileDescriptor2) }
 
-var fileDescriptor_pipeline_1f7726af2adbed75 = []byte{
-	// 65 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2b, 0xc8, 0x2c, 0x48,
-	0xcd, 0xc9, 0xcc, 0x4b, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x00, 0x53, 0xe9, 0xa9,
-	0x79, 0x46, 0x82, 0x5c, 0xfc, 0x01, 0x50, 0xb9, 0xe0, 0xd4, 0xa2, 0xb2, 0xcc, 0xe4, 0xd4, 0x24,
-	0x36, 0xb0, 0xa4, 0x31, 0x20, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x18, 0x38, 0xde, 0x35, 0x00, 0x00,
-	0x00,
+var fileDescriptor2 = []byte{
+	// 181 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x6c, 0x8e, 0x31, 0xab, 0xc2, 0x30,
+	0x14, 0x46, 0x49, 0x1f, 0xf4, 0xbd, 0x77, 0xc1, 0x0a, 0x19, 0x34, 0x38, 0x49, 0xa7, 0x4e, 0x45,
+	0x74, 0x73, 0x71, 0x76, 0xd3, 0xfa, 0x0b, 0xb4, 0xfd, 0x28, 0x01, 0x9b, 0xc4, 0xde, 0xd4, 0xdf,
+	0x2f, 0xa4, 0xcd, 0x20, 0x3a, 0x85, 0x2f, 0x07, 0xce, 0x3d, 0x94, 0x39, 0xed, 0x70, 0xd7, 0x06,
+	0xa5, 0xeb, 0xad, 0xb7, 0xf2, 0x2f, 0x3c, 0x2d, 0x4c, 0x7e, 0xa6, 0xd9, 0xd1, 0xb4, 0x60, 0x5f,
+	0xe1, 0x31, 0x80, 0xbd, 0xcc, 0x28, 0xd1, 0x8d, 0x12, 0x6b, 0x51, 0xfc, 0x57, 0x89, 0x6e, 0xa4,
+	0xa2, 0xdf, 0xda, 0x76, 0x1d, 0x8c, 0x57, 0x49, 0xf8, 0x8c, 0x53, 0x2e, 0x28, 0x65, 0x3b, 0xf4,
+	0x35, 0xd4, 0x4f, 0x00, 0xd3, 0xca, 0xf7, 0x94, 0x45, 0x25, 0x3b, 0x6b, 0x18, 0xdf, 0x9c, 0x1d,
+	0x98, 0xaf, 0x2d, 0xa2, 0x73, 0x9a, 0xdb, 0x8a, 0xe6, 0xa7, 0x29, 0xf5, 0x82, 0xfe, 0xa9, 0x6b,
+	0xc8, 0x03, 0xa5, 0xa3, 0x4e, 0x2e, 0xcb, 0x98, 0x5d, 0xbe, 0x35, 0xaf, 0xd4, 0x27, 0x18, 0x2f,
+	0x17, 0x62, 0x23, 0x6e, 0x69, 0x80, 0xbb, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0x36, 0xee, 0x0d,
+	0x5e, 0x05, 0x01, 0x00, 0x00,
 }

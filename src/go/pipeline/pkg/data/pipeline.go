@@ -1,6 +1,7 @@
 package data
 
 type PipelineRequest struct {
+	Id        string
 	Source    string
 	Input     string
 	Entities  []string
